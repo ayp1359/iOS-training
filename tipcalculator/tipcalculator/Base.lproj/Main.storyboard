@@ -8,7 +8,6 @@
         <!--Navigation Controller-->
         <scene sceneID="Gg8-bh-eai">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mE1-N7-F7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="ehX-Ii-N4Q" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="C1o-rC-Vzl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -18,6 +17,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mE1-N7-F7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3" y="232"/>
         </scene>

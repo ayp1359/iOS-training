@@ -19,8 +19,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Override point for customization after application launch.
   
-  TipViewController *vc = [[TipViewController alloc] init];
-  self.window.rootViewController = vc;
+  TipViewController *rootVC = [[TipViewController alloc] init];
+
+  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:rootVC];
+  [navVC setNavigationBarHidden:NO];
+  navVC.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+  
+  self.window.rootViewController = navVC;
   [self.window makeKeyAndVisible];
   
   return YES;
