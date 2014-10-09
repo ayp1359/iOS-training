@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tipControl;
+@property (weak, nonatomic) IBOutlet UIButton *clearButton;
 
 - (IBAction)onTap:(id)sender;
 - (void) updateValues;
@@ -29,10 +30,23 @@
   self.title = @"Tip Calculator";
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
   
+  [self.billTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+
+  [self.billTextField becomeFirstResponder];
+  
+  [self.clearButton addTarget:self action:@selector(clearButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+  
+  [[self.clearButton layer] setBorderWidth:1.0f];
+  [[self.clearButton layer] setBorderColor:[UIColor redColor].CGColor];
+  [[self.clearButton layer] setCornerRadius:5.0f];
   
   [self updateValues];
 }
 
+
+-(void)textFieldDidChange :(UITextField *)theTextField{
+  [self updateValues];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
   
@@ -44,11 +58,11 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-  NSLog(@"view will disappear");
+  
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-  NSLog(@"view did disappear");
+  
 }
 
 -(void) onSettingsButton{
@@ -60,15 +74,10 @@
   // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+- (void)clearButtonPressed:(id)sender{
+  self.billTextField.text = @"";
+  [self updateValues];
+}
 
 - (IBAction)onTap:(id)sender {
   [self.view endEditing:YES];
@@ -76,6 +85,9 @@
 }
 
 - (void)updateValues {
+  
+  NSString *billAmountstr =self.billTextField.text;
+  
   float billAmount = [self.billTextField.text floatValue];
   
   NSArray *tipValues = @[@(0.1),@(0.15),@(0.2)];
@@ -83,7 +95,10 @@
   float totalAmount = tipAmount+billAmount;
   self.tipLabel.text = [NSString stringWithFormat:@"%0.2f",tipAmount];
   self.totalLabel.text = [NSString stringWithFormat:@"$%0.2f",totalAmount];
+  [self.billTextField becomeFirstResponder];
+  self.billTextField.text = billAmountstr;
   
 }
+
 
 @end

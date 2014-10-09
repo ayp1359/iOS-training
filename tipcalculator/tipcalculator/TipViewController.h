@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TipViewController : UIViewController
+@interface TipViewController : UIViewController<UITextViewDelegate>
 
 @end
