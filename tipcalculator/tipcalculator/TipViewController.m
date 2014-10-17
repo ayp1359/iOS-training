@@ -29,9 +29,7 @@
   
   self.title = @"Tip Calculator";
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(onSettingsButton)];
-  
-  
-  
+
   [self.billTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
   
   [self.billTextField becomeFirstResponder];
@@ -45,36 +43,30 @@
   [self updateValues];
 }
 
--(void) force2Decimal{
+-(void)textFieldDidChange :(UITextField *)theTextField{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setObject:self.billTextField.text forKey:@"billTextField"];
+  [self force2Decimal];
+  [self updateValues];
+}
+
+-(void)force2Decimal{
   NSArray *floatStringComps = [self.billTextField.text componentsSeparatedByString:@"."];
   NSUInteger numberOfDecimalPlaces = 0;
   NSUInteger numberOfIntegerPlaces = 0;
   if ([floatStringComps count]>1){
     numberOfDecimalPlaces =  [[floatStringComps objectAtIndex:1] length];
     numberOfIntegerPlaces =  [[floatStringComps objectAtIndex:0] length];
-    
   }
   
-  NSLog(@"%lu,%lu",(unsigned long)numberOfIntegerPlaces,(unsigned long)numberOfDecimalPlaces);
+  //NSLog(@"%lu,%lu",(unsigned long)numberOfIntegerPlaces,(unsigned long)numberOfDecimalPlaces);
   
   if (numberOfDecimalPlaces>1)
     self.billTextField.text = [NSString stringWithFormat:@"%@.%@",[floatStringComps objectAtIndex:0],[[floatStringComps objectAtIndex:1] substringToIndex:2] ];
-  
 }
 
--(void)textFieldDidChange :(UITextField *)theTextField{
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:self.billTextField.text forKey:@"billTextField"];
-  
-  [self force2Decimal];
-  
-  
-  [self updateValues];
-}
 
 - (void)viewDidAppear:(BOOL)animated {
-  
-  
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   self.billTextField.text = [defaults objectForKey:@"billTextField"];
   NSInteger defaultTipIndex =  [[defaults objectForKey:@"settingsDefaultTip"] integerValue];
@@ -82,7 +74,6 @@
   
   [self force2Decimal];
   [self updateValues];
-  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
